@@ -18,10 +18,12 @@ delete_index(){
 }
 
 indexes(){
+  #HEY! I changed this to use jq instead of awk. If it is broken, this is probably why.
+  # -Aaron.
   local filter="$1"
 
   curl --silent "${ES_URI}/_cat/indices?v" \
-  | awk '{print $3}' \
+  | jq -r '.[].index' \
   | grep "$filter"
 }
 
